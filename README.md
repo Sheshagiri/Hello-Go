@@ -2,19 +2,16 @@
 Simple hello world http server written in Go.
 
 # Clone
-`
-sheshagiri@ubuntu:~$ git clone http://github.com/Sheshagiri/Hello-Go
+`sheshagiri@ubuntu:~$ git clone http://github.com/Sheshagiri/Hello-Go
 
 Cloning into 'Hello-Go'...
 remote: Counting objects: 19, done.
 remote: Compressing objects: 100% (19/19), done.
 remote: Total 19 (delta 7), reused 0 (delta 0), pack-reused 0
 Unpacking objects: 100% (19/19), done.
-Checking connectivity... done.
-`
+Checking connectivity... done.`
 # Build
-`
-sheshagiri@ubuntu:~$ cd Hello-Go/
+`sheshagiri@ubuntu:~$ cd Hello-Go/
 sheshagiri@ubuntu:~/Hello-Go$ sudo docker build -t hello-go:1 .
 Sending build context to Docker daemon  83.46kB
 Step 1/9 : FROM golang
@@ -48,12 +45,9 @@ Removing intermediate container 3d8d879d62ab
 Removing intermediate container 9ed3c7c6ab1a
  ---> 3fa06ac04eab
 Successfully built 3fa06ac04eab
-Successfully tagged hello-go:1
-`
-`
-sheshagiri@ubuntu:~/Hello-Go$ sudo docker images | grep hello-go
-hello-go                                                                     1                   3fa06ac04eab        About a minute ago   801MB
-`
+Successfully tagged hello-go:1`
+`sheshagiri@ubuntu:~/Hello-Go$ sudo docker images | grep hello-go
+hello-go                                                                     1                   3fa06ac04eab        About a minute ago   801MB`
 # Run
 sheshagiri@ubuntu:~/Hello-Go$ `sudo docker  run -d --name hello-go -p 8000:8000 hello-go:1`
 a6a1d4213f6192a2009dbd95c038e6685e27dd890d8a15a8264bba4f16b7c632
