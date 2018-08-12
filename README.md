@@ -6,6 +6,8 @@ sheshagiri@ubuntu:~$ `git clone http://github.com/Sheshagiri/Hello-Go`
 
 # Build
 sheshagiri@ubuntu:~$ `cd Hello-Go/`
+
+
 sheshagiri@ubuntu:~/Hello-Go$ `sudo docker build -t hello-go:1 .`
 
 sheshagiri@ubuntu:~/Hello-Go$ `sudo docker images | grep hello-go`
