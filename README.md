@@ -17,7 +17,9 @@ sheshagiri@ubuntu:~/Hello-Go$ `sudo docker  run -d --name hello-go -p 8000:8000 
 sheshagiri@ubuntu:~/Hello-Go$ `sudo docker ps | grep hello-go`
 # Verify
 sheshagiri@ubuntu:~/Hello-Go$ `curl localhost:8000`
+
 Hello
 
 sheshagiri@ubuntu:~/Hello-Go$ `curl localhost:8000/Sheshagiri`
+
 Hello Sheshagiri
