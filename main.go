@@ -21,7 +21,8 @@ func checkHealth(w http.ResponseWriter, r *http.Request) {
 }
 
 func printVersion(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, version)
+	message := "\n<b>" + version + "<\\/b>\n"
+	fmt.Fprintf(w, message)
 }
 
 func greet(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +46,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 	case h >= 18:
 		message = evening
 	}
-	message = message + user + "!\n\n" + t.Format(time.ANSIC)
+	message = message + user + "!\n\n" + t.Format(time.ANSIC) + "\n"
 	fmt.Fprintf(w, message)
 }
 
