@@ -17,8 +17,8 @@ notifications:
     on_success: change
     on_failure: always
 
-before_install:
-  - './.travis/main.sh'
+#before_install:
+#  - './.travis/main.sh'
 
 script:
   - 'make build'
