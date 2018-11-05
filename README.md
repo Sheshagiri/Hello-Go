@@ -1,4 +1,4 @@
-# Hello-Go
+# Hello-Go [![Build Status](https://travis-ci.com/Sheshagiri/Hello-Go.png?branch=master)](https://travis-ci.com/Sheshagiri/Hello-Go)
 Simple hello world http server written in Go.
 
 # Clone
