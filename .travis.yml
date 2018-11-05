@@ -11,11 +11,20 @@ services:
 branches:
   only:
   - master
-  
+
 notifications:
   email:
     on_success: change
     on_failure: always
 
+before_install:
+  - './.travis/main.sh'
+
 script:
-  - go build 
+  - 'make build'
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+      docker login https://quay.io -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+      make docker ;
+    fi  
