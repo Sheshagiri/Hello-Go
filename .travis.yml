@@ -1,0 +1,21 @@
+language: go
+
+go:
+ - 1.10.x
+
+os: linux
+dist: trusty
+sudo: required
+services:
+- docker
+branches:
+  only:
+  - master
+  
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+script:
+  - go build 
