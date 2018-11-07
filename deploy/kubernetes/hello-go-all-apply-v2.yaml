@@ -33,6 +33,28 @@ spec:
         ports:
         - containerPort: 8000
 ---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-go-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-go
+        version: v2
+    spec:
+      containers:
+      - name: hello-go
+        image: quay.io/sheshagiri0/hello-go:3.0.0-11
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 8000
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:

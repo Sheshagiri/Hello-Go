@@ -10,9 +10,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: "/version"
-    - uri:
-        prefix: "/greet"
+        prefix: "/hello-go"
     route:
     - destination:
         host: hello-go
