@@ -2,12 +2,24 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"strings"
 	"time"
 )
 
-const version = "1.0.0"
+const version = "2.0.0"
+
+var htmlTemplate = `<html>
+<head>
+    <title>Hello Go!</title>
+</head>
+<body>
+	{{ .TimeOfTheDay }} <b><i>{{ .Name }}</i></b>
+	<br><br>
+	<b>{{ .Date }}</b>
+</body>
+</html>`
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	message := r.URL.Path
@@ -26,6 +38,9 @@ func printVersion(w http.ResponseWriter, r *http.Request) {
 }
 
 func greet(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.New("main")
+	tmpl, _ = tmpl.Parse(htmlTemplate)
+
 	t := time.Now()
 	h := t.Hour()
 	path := r.URL.Path
@@ -38,6 +53,12 @@ func greet(w http.ResponseWriter, r *http.Request) {
 
 	var message string
 
+	type Data struct {
+		TimeOfTheDay string
+		Name         string
+		Date         string
+	}
+
 	switch {
 	case h >= 0 && h < 12:
 		message = morning
@@ -46,15 +67,22 @@ func greet(w http.ResponseWriter, r *http.Request) {
 	case h >= 18:
 		message = evening
 	}
-	message = message + "<i> " + user + "!</i>\n\n<br>" + t.Format(time.ANSIC) + "</br>\n"
-	fmt.Fprintf(w, message)
+
+	data := Data{
+		TimeOfTheDay: message,
+		Name:         user,
+		Date:         t.Format(time.ANSIC),
+	}
+	//message = message + "<i> " + user + "!</i>\n\n<br>" + t.Format(time.ANSIC) + "</br>\n"
+	//fmt.Fprintf(w, message)
+	tmpl.Execute(w, &data)
 }
 
 func main() {
 	http.HandleFunc("/health", checkHealth)
 	http.HandleFunc("/", sayHello)
-	http.HandleFunc("/greet/", greet)
-	http.HandleFunc("/version", printVersion)
+	http.HandleFunc("/hello-go/greet/", greet)
+	http.HandleFunc("/hello-go/version", printVersion)
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {
 		panic(err)

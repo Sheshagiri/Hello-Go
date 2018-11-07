@@ -1,13 +1,20 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: hello-go-virtualservice
+  name: hello-go
 spec:
   hosts:
   - "*"
   gateways:
   - hello-go-gateway
   http:
-  - route:
+  - match:
+    - uri:
+        prefix: "/version"
+    - uri:
+        prefix: "/greet"
+    route:
     - destination:
-        host: hello-go-service
+        host: hello-go
+        port:
+          number: 8000
