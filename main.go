@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-const version = "2.0.0"
+const version = "3.0.0"
 
 var htmlTemplate = `<html>
 <head>
@@ -18,6 +18,8 @@ var htmlTemplate = `<html>
 	{{ .TimeOfTheDay }} <b><i>{{ .Name }}</i></b>
 	<br><br>
 	<b>{{ .Date }}</b>
+	<br><br>
+	Running version: <u> {{ .Version}} </u>
 </body>
 </html>`
 
@@ -57,6 +59,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 		TimeOfTheDay string
 		Name         string
 		Date         string
+		Version      string
 	}
 
 	switch {
@@ -72,6 +75,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 		TimeOfTheDay: message,
 		Name:         user,
 		Date:         t.Format(time.ANSIC),
+		Version:      version,
 	}
 	//message = message + "<i> " + user + "!</i>\n\n<br>" + t.Format(time.ANSIC) + "</br>\n"
 	//fmt.Fprintf(w, message)
