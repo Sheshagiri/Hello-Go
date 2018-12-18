@@ -14,7 +14,7 @@ RUN ls
 WORKDIR /go/src/github.com/Hello-Go
 
 RUN go build
-
+# build on travis
 # tell docker what port to expose
 EXPOSE 8000
 
