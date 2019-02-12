@@ -62,17 +62,20 @@ workflows:
   build-n-release:
     jobs:
       - build:
-          filters:  # required since `deploy` has tag filters AND requires `build`
+          filters:  #build all the branches, except master and ignore tags
             tags:
               ignore: /.*/
+            branches:
+              ignore:
+                - master
       - release:
-          filters:
+          filters: #build only tags and push the image with tag
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
       - master:
-          filters:
+          filters: #build only master and push the image with master tag
             tags:
               ignore: /.*/
             branches:
