@@ -14,7 +14,11 @@ else
 	BUILDNUMBER=$(BUILD_NUMBER)
 endif
 
-VERSION=${RELEASE}-${BUILDNUMBER}
+ifeq ($(RELEASE_TAG), )
+	VERSION=$(RELEASE_TAG)
+else
+	VERSION=${RELEASE}-${BUILDNUMBER}
+endif
 
 generatek8yaml:
 	@mkdir -p pkg/deploy/kubernetes
