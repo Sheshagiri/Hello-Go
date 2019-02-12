@@ -19,3 +19,38 @@ jobs:
           command: |
             docker login -u ${QUAY_USERNAME} -p ${QUAY_PASSWORD}  quay.io
             make docker
+  deploy:
+    environment:
+      BUILD_NUMBER: ${CIRCLE_TAG}
+      DOCKER_REGISTRY: quay.io/sheshagiri0
+    docker:
+      - image: circleci/golang:1.10
+    working_directory: /go/src/github.com/Sheshagiri/Hello-Go
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: make build
+          command: make build
+      - run:
+          name: make docker
+          command: |
+            docker login -u ${QUAY_USERNAME} -p ${QUAY_PASSWORD}  quay.io
+            make docker
+workflows:
+  version: 2
+  build-n-deploy:
+    jobs:
+      - build:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
