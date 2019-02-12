@@ -1,5 +1,5 @@
 CURDIR:=$(shell pwd)
-SVCMAJORVERSION=3
+SVCMAJORVERSION=2
 SVCMINORVERSION=0
 SVCPATCHVERSION=0
 RELEASE=${SVCMAJORVERSION}.${SVCMINORVERSION}.${SVCPATCHVERSION}
@@ -8,13 +8,17 @@ DOCKER_REGISTRY=quay.io/sheshagiri0
 SVCAPPNAME=hello-go
 SVCNAME=${SVCAPPNAME}-${SVCMAJORVERSION}-${SVCMINORVERSION}
 
-ifeq ($(TRAVIS_BUILD_NUMBER), )
+ifeq ($(BUILD_NUMBER), )
 	BUILDNUMBER=0
 else
-	BUILDNUMBER=$(TRAVIS_BUILD_NUMBER)
+	BUILDNUMBER=$(BUILD_NUMBER)
 endif
 
-VERSION=${RELEASE}-${BUILDNUMBER}
+ifeq ($(RELEASE_TAG), )
+	VERSION=${RELEASE}-${BUILDNUMBER}
+else
+	VERSION=$(RELEASE_TAG)
+endif
 
 generatek8yaml:
 	@mkdir -p pkg/deploy/kubernetes
@@ -35,7 +39,7 @@ build:
 	cd ${CURDIR};CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ${SVCAPPNAME}
 
 dockerbuild: build
-	 docker build -t ${SVCAPPNAME}:${VERSION} .
+	 docker build -t ${SVCAPPNAME}:${VERSION} -f DockerfileCircleCI .
 
 docker: dockerbuild
 	docker tag ${SVCAPPNAME}:${VERSION} ${DOCKER_REGISTRY}/${SVCAPPNAME}:${VERSION}

@@ -1,0 +1,3 @@
+FROM alpine:3.7
+COPY hello-go /hello-go
+ENTRYPOINT [ "/hello-go" ]
