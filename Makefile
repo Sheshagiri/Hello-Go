@@ -15,9 +15,9 @@ else
 endif
 
 ifeq ($(RELEASE_TAG), )
-	VERSION=$(RELEASE_TAG)
-else
 	VERSION=${RELEASE}-${BUILDNUMBER}
+else
+	VERSION=$(RELEASE_TAG)
 endif
 
 generatek8yaml:
