@@ -1,5 +1,5 @@
 CURDIR:=$(shell pwd)
-SVCMAJORVERSION=3
+SVCMAJORVERSION=2
 SVCMINORVERSION=0
 SVCPATCHVERSION=0
 RELEASE=${SVCMAJORVERSION}.${SVCMINORVERSION}.${SVCPATCHVERSION}
@@ -35,7 +35,7 @@ build:
 	cd ${CURDIR};CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ${SVCAPPNAME}
 
 dockerbuild: build
-	 docker build -t ${SVCAPPNAME}:${VERSION} .
+	 docker build -t ${SVCAPPNAME}:${VERSION} -f DockerfileCircleCI .
 
 docker: dockerbuild
 	docker tag ${SVCAPPNAME}:${VERSION} ${DOCKER_REGISTRY}/${SVCAPPNAME}:${VERSION}

@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    environment:
+      BUILD_NUMBER: ${CIRCLE_BUILD_NUM}
+      DOCKER_REGISTRY: quay.io/sheshagiri0
+    docker:
+      - image: circleci/golang:1.10
+    working_directory: /go/src/github.com/Sheshagiri/Hello-Go
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: make build
+          command: make build
+      - run:
+          name: make docker
+          command: |
+            docker login -u ${QUAY_USERNAME} -p ${QUAY_PASSWORD}  quay.io
+            make docker
